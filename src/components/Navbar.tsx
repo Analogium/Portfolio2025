@@ -38,7 +38,7 @@ const Navbar = () => {
             className="relative group"
           >
             <span className="text-2xl font-bold text-gradient">
-              Portfolio
+              Theo Lambert
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-300 group-hover:w-full" />
           </Link>
