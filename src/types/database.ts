@@ -7,6 +7,7 @@ export interface Profile {
   github_username: string;
   linkedin_url?: string;
   email: string;
+  cv_url?: string;
   skills_by_category: {
     frontend: string[];
     backend: string[];

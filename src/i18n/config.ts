@@ -15,6 +15,7 @@ i18n
           },
           hero: {
             greeting: "Hi, I'm {{name}}. Nice to meet you.",
+            downloadCV: 'Download CV'
           },
           skills: {
             title: 'Technologies I Work With',
@@ -48,7 +49,7 @@ i18n
           },
           projects: {
             title: 'My Projects',
-            description: 'Here are some of the projects I\'ve worked on. Each one represents a unique challenge and learning experience.',
+            description: "Here are some of the projects I've worked on. Each one represents a unique challenge and learning experience.",
             code: 'Code',
             demo: 'Live Demo',
           },
@@ -66,20 +67,21 @@ i18n
           },
           hero: {
             greeting: "Bonjour, je suis {{name}}. Ravi de vous rencontrer.",
+            downloadCV: 'Télécharger CV'
           },
           skills: {
-            title: 'Technologies que j\'utilise',
+            title: "Technologies que j'utilise",
             frontend: {
               title: 'Développement Frontend',
-              description: 'Création d\'interfaces responsives avec des frameworks modernes',
+              description: "Création d'interfaces responsives avec des frameworks modernes",
             },
             backend: {
               title: 'Développement Backend',
-              description: 'Construction d\'applications serveur robustes et évolutives',
+              description: "Construction d'applications serveur robustes et évolutives",
             },
             devops: {
               title: 'DevOps',
-              description: 'Automatisation du déploiement et maintenance de l\'infrastructure',
+              description: "Automatisation du déploiement et maintenance de l'infrastructure",
             },
           },
           contact: {

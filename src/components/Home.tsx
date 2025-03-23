@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import type { Profile } from '../types/database';
-import { Github, Linkedin, Mail, ArrowRight, Code, Server, Cloud } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowRight, Code, Server, Cloud, FileDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ContactModal from './ContactModal';
@@ -34,6 +34,12 @@ const Home = () => {
 
     fetchProfile();
   }, []);
+
+  const handleDownloadCV = () => {
+    if (profile?.cv_url) {
+      window.open(profile.cv_url, '_blank');
+    }
+  };
 
   if (loading) {
     return (
@@ -100,6 +106,15 @@ const Home = () => {
                 <Linkedin className="w-6 h-6 inline-block mr-2" />
                 LinkedIn
               </a>
+            )}
+            {profile.cv_url && (
+              <button
+                onClick={handleDownloadCV}
+                className="button-gradient"
+              >
+                <FileDown className="w-6 h-6 inline-block mr-2" />
+                {t('hero.downloadCV')}
+              </button>
             )}
             <button
               onClick={() => setIsContactModalOpen(true)}
