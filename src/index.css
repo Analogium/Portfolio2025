@@ -2,140 +2,216 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 :root {
-  --primary: #8B5CF6;
-  --primary-dark: #7C3AED;
-  --primary-light: #A78BFA;
-  --gradient-start: #8B5CF6;
-  --gradient-end: #6366F1;
+  --primary: #FF3366;
+  --primary-dark: #E61E4D;
+  --primary-light: #FF6B8B;
+  --secondary: #6366F1;
+  --secondary-dark: #4F46E5;
+  --secondary-light: #818CF8;
+  --accent: #22D3EE;
 }
 
 @layer base {
   :root {
     --background: 255 255 255;
-    --background-gradient: 245 243 255;
-    --text: 17 24 39;
-    --text-secondary: 75 85 99;
+    --background-light: 241 245 249;
+    --text: 15 23 42;
+    --text-secondary: 71 85 105;
     --card: 255 255 255;
-    --card-opacity: 0.7;
-    --border: 255 255 255;
-    --border-opacity: 0.2;
+    --card-opacity: 0.9;
+    --border: 226 232 240;
+    --border-opacity: 0.5;
   }
 
   :root[class~="dark"] {
-    --background: 15 23 42;
-    --background-gradient: 30 41 59;
-    --text: 241 245 249;
+    --background: 2 6 23;
+    --background-light: 15 23 42;
+    --text: 226 232 240;
     --text-secondary: 148 163 184;
-    --card: 30 41 59;
-    --card-opacity: 0.7;
+    --card: 15 23 42;
+    --card-opacity: 0.8;
     --border: 51 65 85;
-    --border-opacity: 0.2;
+    --border-opacity: 0.3;
   }
 
   body {
-    @apply bg-gradient-to-br from-[rgb(var(--background))] to-[rgb(var(--background-gradient))] min-h-screen text-[rgb(var(--text))] transition-colors duration-300;
+    @apply bg-[rgb(var(--background))] text-[rgb(var(--text))] font-sans antialiased;
+    background: linear-gradient(
+      135deg,
+      rgb(var(--background)) 0%,
+      rgb(var(--background-light)) 100%
+    );
+    min-height: 100vh;
   }
 
   ::-webkit-scrollbar {
-    @apply w-2;
+    @apply w-1.5;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-[rgb(var(--background-gradient))];
+    @apply bg-[rgb(var(--background))];
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/50 rounded-full hover:bg-primary transition-colors;
+    @apply bg-primary/30 rounded-full hover:bg-primary/50 transition-colors;
   }
 }
 
 .glass-card {
-  @apply bg-[rgb(var(--card))]/[var(--card-opacity)] border border-[rgb(var(--border))]/[var(--border-opacity)] shadow-xl;
+  @apply backdrop-blur-lg bg-[rgb(var(--card))]/[var(--card-opacity)] 
+         border border-[rgb(var(--border))]/[var(--border-opacity)]
+         shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)];
+}
+
+.nav-link {
+  @apply relative text-[rgb(var(--text))] font-medium transition-all duration-300
+         hover:text-primary;
+}
+
+.nav-link::after {
+  @apply content-[''] absolute -bottom-1 left-0 w-0 h-[2px]
+         bg-gradient-to-r from-primary via-secondary to-accent
+         transition-all duration-300 ease-in-out;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+.animated-border {
+  @apply relative;
+}
+
+.animated-border::before {
+  content: '';
+  @apply absolute -inset-0.5 bg-gradient-to-r from-primary via-secondary to-accent
+         rounded-lg blur opacity-75 transition duration-1000 animate-pulse;
+}
+
+.skill-card {
+  @apply glass-card rounded-xl p-6 transition-all duration-500
+         hover:transform hover:scale-[1.02] hover:shadow-2xl
+         border border-[rgb(var(--border))]/30 hover:border-primary/30;
+}
+
+.skill-icon {
+  @apply w-14 h-14 rounded-lg flex items-center justify-center mb-4
+         bg-gradient-to-br from-primary/10 to-secondary/10
+         border border-[rgb(var(--border))]/30;
+}
+
+.skill-tag {
+  @apply px-3 py-1.5 rounded-full text-sm font-medium
+         bg-gradient-to-r from-primary/5 to-secondary/5
+         border border-[rgb(var(--border))]/30
+         hover:border-primary/30 hover:from-primary/10 hover:to-secondary/10
+         transition-all duration-300 transform hover:scale-105;
+}
+
+.project-card {
+  @apply relative overflow-hidden rounded-xl transition-all duration-500
+         hover:transform hover:scale-[1.02] hover:shadow-2xl;
+}
+
+.project-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10
+         opacity-0 transition-opacity duration-300;
+}
+
+.project-card:hover::before {
+  @apply opacity-100;
 }
 
 .animated-gradient {
-  background: linear-gradient(-45deg, var(--gradient-start), var(--gradient-end));
+  background: linear-gradient(-45deg, var(--primary), var(--secondary), var(--accent));
   background-size: 200% 200%;
   animation: gradient 5s ease infinite;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
+.glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+}
+
+.button-gradient {
+  @apply relative overflow-hidden bg-gradient-to-r from-primary to-secondary
+         hover:from-primary-dark hover:to-secondary-dark
+         text-white font-medium rounded-lg px-6 py-3
+         transition-all duration-300 transform hover:scale-105
+         hover:shadow-[0_0_20px_rgba(255,51,102,0.5)];
+}
+
+.button-gradient::before {
+  content: '';
+  @apply absolute top-0 -left-full w-full h-full
+         bg-gradient-to-r from-transparent via-white/20 to-transparent
+         transition-all duration-1000 skew-x-12;
+}
+
+.button-gradient:hover::before {
+  @apply left-full;
+}
+
+.hero-background {
+  @apply fixed inset-0 pointer-events-none;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(255, 51, 102, 0.1) 0%,
+    rgba(99, 102, 241, 0.1) 25%,
+    rgba(34, 211, 238, 0.1) 50%,
+    transparent 100%
+  );
+  mix-blend-mode: plus-lighter;
+}
+
+.dark .hero-background {
+  background: radial-gradient(
+    ellipse at top,
+    rgba(255, 51, 102, 0.05) 0%,
+    rgba(99, 102, 241, 0.05) 25%,
+    rgba(34, 211, 238, 0.05) 50%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+}
+
+/* Navbar animations */
+@keyframes nav-slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-.skill-card {
-  @apply glass-card rounded-2xl p-8 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:bg-[rgb(var(--card))]/90;
-}
-
-.skill-icon {
-  @apply w-16 h-16 rounded-2xl flex items-center justify-center mb-6 animated-gradient;
-}
-
-.skill-tag {
-  @apply px-4 py-2 bg-primary/10 text-primary-dark dark:text-primary-light rounded-full text-sm font-medium 
-         border border-primary/20 transition-all duration-300
-         hover:bg-primary/20 hover:scale-105;
-}
-
-.nav-link {
-  @apply relative text-[rgb(var(--text-secondary))] font-medium transition-colors duration-300
-         after:content-[''] after:absolute after:bottom-0 after:left-0 
-         after:w-0 after:h-0.5 after:bg-primary 
-         after:transition-all after:duration-300
-         hover:text-primary hover:after:w-full;
-}
-
-.social-link-card {
-  @apply p-4 rounded-full bg-[rgb(var(--card))]/50 border border-[rgb(var(--border))]/30
-         text-[rgb(var(--text-secondary))] hover:text-primary
-         transform transition-all duration-300 hover:scale-110 hover:shadow-lg;
-}
-
-@keyframes blob {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  25% {
-    transform: translate(20px, -30px) scale(1.1);
-  }
-  50% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  75% {
-    transform: translate(30px, 30px) scale(1.1);
-  }
-}
-
-.animate-blob {
-  animation: blob 20s infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animate-gradient {
-  background-size: 300% 300%;
-  animation: moveGradient 8s ease infinite;
-}
-
-@keyframes moveGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.nav-slide-down {
+  animation: nav-slide-down 0.3s ease-out forwards;
 }
