@@ -50,7 +50,7 @@ const Projects = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-16">
+      <div className="text-center mb-16 mt-16">
         <h1 className="text-4xl font-bold text-[rgb(var(--text))] mb-4">{t('projects.title')}</h1>
         <p className="text-xl text-[rgb(var(--text-secondary))] max-w-2xl mx-auto">
           {t('projects.description')}
